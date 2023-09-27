@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, rgba(19, 9, 13, 0.432) 0%, rgba(132, 161, 160, 0.2190126050420168) 35%, rgba(93, 141, 151, 0.9052871148459384) 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #ccc;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .task {
+            flex-grow: 1;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .delete-btn {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .add-task-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #ccc;
+        }
+
+        .task-checkbox {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div class="add-task-container">
+            <input type="text" id="taskInput" placeholder="Add a new task">
+            <button onclick="addTask()">Add Task</button>
+        </div>
+        <ul id="taskList">
+            <!-- Tasks will be added here -->
+        </ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const taskList = document.getElementById("taskList");
+
+            if (taskInput.value.trim() === "") {
+                alert("Please enter a task.");
+                return;
+            }
+
+            const taskText = document.createTextNode(taskInput.value);
+            const listItem = document.createElement("li");
+            const taskCheckbox = document.createElement("input");
+            taskCheckbox.type = "checkbox";
+            taskCheckbox.className = "task-checkbox";
+
+            const taskSpan = document.createElement("span");
+            taskSpan.className = "task";
+            taskSpan.appendChild(taskCheckbox);
+            taskSpan.appendChild(taskText);
+
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "delete-btn";
+            deleteButton.appendChild(document.createTextNode("Delete"));
+            deleteButton.onclick = function () {
+                listItem.remove();
+            };
+
+            listItem.appendChild(taskSpan);
+            listItem.appendChild(deleteButton);
+
+            taskCheckbox.addEventListener("change", function () {
+                if (taskCheckbox.checked) {
+                    taskSpan.classList.add("completed");
+                } else {
+                    taskSpan.classList.remove("completed");
+                }
+            });
+
+            taskList.appendChild(listItem);
+            taskInput.value = "";
+        }
+    </script>
+
+
+</body>
+
+</html>
